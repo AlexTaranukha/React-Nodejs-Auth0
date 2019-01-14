@@ -25,7 +25,7 @@ app.use(morgan('combined'));
 
 // retrieve all questions
 app.get('/', (req, res) => {
-  const qs = questions.map(q =>({
+  const qs = questions.map(q => ({
     id: q.id,
     title: q.title,
     description: q.description,
@@ -35,8 +35,8 @@ app.get('/', (req, res) => {
 });
 
 // get a specific question
-app.get('/:id', (req, res) =>{
-  const question = question.filter(q=> (q.id === parseInt(req.params.id)));
+app.get('/:id', (req, res) => {
+  const question = questions.filter(q => (q.id === parseInt(req.params.id)));
   if (question.length > 1) return res.status(500).send();
   if (question.length === 0) return res.status(404).send();
   res.send(question[0]);

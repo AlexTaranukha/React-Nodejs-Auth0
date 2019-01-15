@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom';
 import NavBar from './NavBar/NavBar.js';
 import Questions from './Questions/Questions.js'
 import Question from './Question/Question.js'
 import Callback from './Callback';
 import NewQuestion from './NewQuestion/NewQuestion';
 import SecuredRoute from './SecuredRoute/SecuredRoute';
+import auth0Client from './Auth';
 
 class App extends Component {
+  async componentDidMount() {
+    if (this.props.location.pathname === '/callback') return;
+    //
+    try {
+      await auth0Client.silentAuth();
+      this.forceUpdate();
+    }
+    catch (err) {
+      if (err.error !== 'login_required') console.log(err.error);
+    }
+  }
+  // render
   render() {
     return (
       <div>
@@ -21,4 +34,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

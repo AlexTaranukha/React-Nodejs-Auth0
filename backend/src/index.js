@@ -79,7 +79,7 @@ app.post('/answer/:id', checkJwt, (req, res) => {
   const question = questions.filter (q =>(q.id === parseInt(req.params.id)));
 
   if (question.length > 1) return res.status(500).send();
-  if (question.length ===0) return res.status(404).send();
+  if (question.length === 0) return res.status(404).send();
 
   question[0].answers.push({
     answer,
